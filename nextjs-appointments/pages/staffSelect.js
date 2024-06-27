@@ -10,7 +10,8 @@ import Link from 'next/link';
 export async function getServerSideProps(context) {
   const serviceID = context.query.serviceId;
 
-  const res = await fetch(`http://localhost:3030/staff/${serviceID}`);
+  //http://localhost:3030/staff/${serviceID}
+  const res = await fetch(`http://127.0.0.1:5001/appointments-a917d/us-central1/StaffServiceVersion?serviceID=${serviceID}`)
   
   const data = await res.json();
   console.log(data);

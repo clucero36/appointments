@@ -15,7 +15,7 @@ exports.getCatalogServices = functions.https.onRequest((req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   async function getCatalogItems() {
     let { result: { items }} = await catalogApi.searchCatalogItems({
-      enabledLocationIds: [ '${process.env.SQUARE_LOCATION_ID}' ],
+      enabledLocationIds: [ `${process.env.SQUARE_LOCATION_ID}` ],
       productTypes: [ "APPOINTMENTS_SERVICE" ]
     });
 
@@ -27,5 +27,34 @@ exports.getCatalogServices = functions.https.onRequest((req, res) => {
 
   getCatalogItems().then((items) => {
     res.json({items: JSON.stringify(items, replacer)})
+  })
+});
+
+exports.StaffServiceVersion = functions.https.onRequest((req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  const serviceID = req.query.serviceID;
+
+  async function getStaffServiceVersion() {
+    const retrieveServicePromise = catalogApi.retrieveCatalogObject(serviceID);
+    const listActiveTeamMembersPromise = teamApi.searchTeamMembers({
+      query: {
+        filter: {
+          locationIds: [ `${process.env.SQUARE_LOCATION_ID}` ],
+          status: "ACTIVE"
+        }
+      }
+    });
+
+    const [ { result: service }, { result: { teamMembers } } ] =
+      await Promise.all([ retrieveServicePromise, listActiveTeamMembersPromise ]);
+    
+    return [teamMembers, service];
+  }
+
+  getStaffServiceVersion().then((x) => {
+    res.json({
+      team: JSON.stringify(x[0], replacer), 
+      service: JSON.stringify(x[1], replacer),
+    });
   })
 });

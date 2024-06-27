@@ -34,7 +34,6 @@ export default function BookableServices({ serviceData }) {
   // passed as second arg to JSON.parse to handle BigInts
   const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' ? BigInt(value) : value;
   let services = JSON.parse(serviceData.items, reviver);
-  console.log(services);
   let renderedServices = services.map((service) => {
     return (
       <Box key={service.id}>
