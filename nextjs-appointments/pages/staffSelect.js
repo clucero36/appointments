@@ -11,10 +11,10 @@ export async function getServerSideProps(context) {
   const serviceID = context.query.serviceId;
 
   //http://localhost:3030/staff/${serviceID}
-  const res = await fetch(`http://127.0.0.1:5001/appointments-a917d/us-central1/StaffServiceVersion?serviceID=${serviceID}`)
+  const res = await fetch(`http://127.0.0.1:5001/appointments-a917d/us-central1/getStaffServiceVersion?serviceID=${serviceID}`)
   
   const data = await res.json();
-  console.log(data);
+
   if (!data) {
     return {
       notFound: true,

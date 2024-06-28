@@ -30,7 +30,7 @@ exports.getCatalogServices = functions.https.onRequest((req, res) => {
   })
 });
 
-exports.StaffServiceVersion = functions.https.onRequest((req, res) => {
+exports.getStaffServiceVersion = functions.https.onRequest((req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   const serviceID = req.query.serviceID;
 
@@ -58,3 +58,17 @@ exports.StaffServiceVersion = functions.https.onRequest((req, res) => {
     });
   })
 });
+
+exports.getAvailabilities = functions.https.onRequest((req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  const query = req.query;
+
+  async function availabilitySearch() {
+    const { result } = await bookingsApi.searchAvailability(query);
+    return result;
+  }
+  
+  availabilitySearch().then((x) => {
+    res.json(JSON.stringify(x, replacer));
+  })
+})

@@ -47,7 +47,7 @@ export default function availabilities({ serviceData }) {
       }
     }; // end searchRequest
 
-    let res = await axios.get("http://localhost:3030/availabilities", {
+    let res = await axios.get("http://127.0.0.1:5001/appointments-a917d/us-central1/getAvailabilities", {
       params: searchRequest
     })
     
