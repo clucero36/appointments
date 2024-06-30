@@ -16,8 +16,14 @@ export async function getServerSideProps(context) {
   const serviceVersion = context.query.serviceVersion;
   const teamMemberId = context.query.teamMemberId;
   const startAt = context.query.startAt;
-
-  const res = await fetch(`http://localhost:3030/contact/${serviceId}/${serviceVersion}/${teamMemberId}/${startAt}`)
+  
+  const res = await fetch('http://127.0.0.1:5001/appointments-a917d/us-central1/getTeamMemberServiceData?' + new URLSearchParams({
+    serviceId: serviceId,
+    serviceVersion: serviceVersion,
+    teamMemberId: teamMemberId,
+    startAt: startAt,
+  }).toString())
+  
   let data = await res.json();
 
   return {
