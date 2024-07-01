@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
 // on date select call availabilites route 
 // display times slots available for an appointment.
 // takes us to client form page
-export default function availabilities({ serviceData }) {
+export default function Availabilities({ serviceData }) {
   const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' || key === 'serviceVariationVersion' ? BigInt(value) : value;
   const [datesAvail, setDatesAvail] = useState([])
   const [day, setDay] = useState()

@@ -5,7 +5,7 @@ import {
 } from '@chakra-ui/react';
 
 
-export default function appointmentConfirm() {
+export default function AppointmentConfirm() {
   return (
     <Box>
       <Text>Your Appointment has been booked!</Text>

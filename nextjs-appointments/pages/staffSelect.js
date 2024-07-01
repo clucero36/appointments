@@ -30,7 +30,7 @@ export async function getServerSideProps(context) {
 
 // displays service selected, a description of the service, & a list of team members.
 // Next.js Link component transitions user to /availabilities. Query params provided.
-export default function staffSelect({ staffData }) {
+export default function StaffSelect({ staffData }) {
   const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' ? BigInt(value) : value;
   const team = JSON.parse(staffData.team, reviver);
   const service = JSON.parse(staffData.service, reviver);
