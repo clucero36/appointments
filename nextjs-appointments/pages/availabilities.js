@@ -47,7 +47,7 @@ export default function availabilities({ serviceData }) {
       }
     }; // end searchRequest
 
-    let res = await axios.get("http://127.0.0.1:5001/appointments-a917d/us-central1/getAvailabilities", {
+    let res = await axios.get("https://us-central1-appointments-a917d.cloudfunctions.net/getAvailabilities", {
       params: searchRequest
     })
     

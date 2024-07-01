@@ -17,7 +17,7 @@ export async function getServerSideProps(context) {
   const teamMemberId = context.query.teamMemberId;
   const startAt = context.query.startAt;
   
-  const res = await fetch('http://127.0.0.1:5001/appointments-a917d/us-central1/getTeamMemberServiceData?' + new URLSearchParams({
+  const res = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/getTeamMemberServiceData?' + new URLSearchParams({
     serviceId: serviceId,
     serviceVersion: serviceVersion,
     teamMemberId: teamMemberId,
@@ -43,10 +43,8 @@ export default function contact({ serviceDetails }) {
   const [customerNote, setCustomerNote] = useState('');
   const [bookingDur, setBookingDur] = useState('');
   const [teamMember, setTeamMember] = useState('');
-
-  
-
   let serviceData = JSON.parse(serviceDetails, reviver);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     let userData = {
@@ -64,11 +62,11 @@ export default function contact({ serviceDetails }) {
       },
       data: JSON.stringify({userData, serviceData}, replacer),
     }
-    axios.get('http://127.0.0.1:5001/appointments-a917d/us-central1/createAppointment', {
+
+    axios.get('https://us-central1-appointments-a917d.cloudfunctions.net/createAppointment', {
       params: params
     }).then((res) => {
       let booking = JSON.parse(res.data.booking, reviver);
-      console.log(booking);
       setBookingStart(booking.startAt);
       setCustomerId(booking.customerId);
       setCustomerNote(booking.customerNote);
@@ -76,6 +74,7 @@ export default function contact({ serviceDetails }) {
       setTeamMember(res.data.teamMember);
     })
   }
+
   if (bookingStart === '' && customerId === '' && 
     customerNote === '' && bookingDur === '' &&
     teamMember === '') {

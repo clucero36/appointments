@@ -11,7 +11,7 @@ import Header from '../components/Header';
 // BookableServices
 export async function getServerSideProps() {
 
-  const res = await fetch('http://127.0.0.1:5001/appointments-a917d/us-central1/getCatalogServices');
+  const res = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/getCatalogServices');
   
   const data = await res.json();
   
