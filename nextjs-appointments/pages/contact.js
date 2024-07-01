@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use, useState } from 'react';
 import {
   Box, 
   Text,
@@ -38,7 +38,13 @@ export async function getServerSideProps(context) {
 export default function contact({ serviceDetails }) {
   const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' || key === 'serviceVariationVersion' ? BigInt(value) : value;
   const replacer = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' || key === 'serviceVariationVersion' ? value.toString() : value;
-  const router = useRouter();
+  const [customerId, setCustomerId] = useState('');
+  const [bookingStart, setBookingStart] = useState('');
+  const [customerNote, setCustomerNote] = useState('');
+  const [bookingDur, setBookingDur] = useState('');
+  const [teamMember, setTeamMember] = useState('');
+
+  
 
   let serviceData = JSON.parse(serviceDetails, reviver);
   const handleSubmit = (event) => {
@@ -50,34 +56,59 @@ export default function contact({ serviceDetails }) {
       note: event.target.note.value,
     }
 
-    axios.post('http://localhost:3030/create', {
+    const params = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
       data: JSON.stringify({userData, serviceData}, replacer),
+    }
+    axios.get('http://127.0.0.1:5001/appointments-a917d/us-central1/createAppointment', {
+      params: params
     }).then((res) => {
-      router.push(res.data);
+      let booking = JSON.parse(res.data.booking, reviver);
+      console.log(booking);
+      setBookingStart(booking.startAt);
+      setCustomerId(booking.customerId);
+      setCustomerNote(booking.customerNote);
+      setBookingDur(booking.appointmentSegments[0].durationMinutes);
+      setTeamMember(res.data.teamMember);
     })
   }
-
-  return (
-    <Box w='95%' m='2rem auto'>
-      <Text textAlign='center'>Fill Out Your Contact Information To Complete The Booking</Text>
-      <form onSubmit={handleSubmit}>
-        <FormControl mt='2rem' p='10px' border='1px' borderRadius='md' borderColor='#9B5D73'>
-          <FormLabel m='0'>FirstName:</FormLabel >
-          <Input variant='flushed' focusBorderColor='#9B5D73' mb='1rem' size='sm' placeholder='First Name' type='text' name='first'/>
-          <FormLabel m='0'>LastName:</FormLabel >
-          <Input variant='flushed' focusBorderColor='#9B5D73' mb='1rem' size='sm' placeholder='Last Name' type='text' name='last'/>
-          <FormLabel m='0'>Email:</FormLabel >
-          <Input variant='flushed' focusBorderColor='#9B5D73' mb='1rem' size='sm' placeholder='Email' type='text' name='email'/>
-          <FormLabel m='0'>Note:</FormLabel >
-          <Input variant='flushed' focusBorderColor='#9B5D73' mb='1rem' size='sm' placeholder='Customer Note' type='text' name='note'/>
-          <Button type='submit'>Submit</Button>
-        </FormControl>
-      </form>
-    </Box>
-  )
+  if (bookingStart === '' && customerId === '' && 
+    customerNote === '' && bookingDur === '' &&
+    teamMember === '') {
+    return (
+      <Box w='95%' m='2rem auto'>
+        <Text textAlign='center'>Fill Out Your Contact Information To Complete The Booking</Text>
+        <form onSubmit={handleSubmit}>
+          <FormControl mt='2rem' p='10px' border='1px' borderRadius='md' borderColor='#9B5D73'>
+            <FormLabel m='0'>FirstName:</FormLabel >
+            <Input variant='flushed' focusBorderColor='#9B5D73' mb='1rem' size='sm' placeholder='First Name' type='text' name='first'/>
+            <FormLabel m='0'>LastName:</FormLabel >
+            <Input variant='flushed' focusBorderColor='#9B5D73' mb='1rem' size='sm' placeholder='Last Name' type='text' name='last'/>
+            <FormLabel m='0'>Email:</FormLabel >
+            <Input variant='flushed' focusBorderColor='#9B5D73' mb='1rem' size='sm' placeholder='Email' type='text' name='email'/>
+            <FormLabel m='0'>Note:</FormLabel >
+            <Input variant='flushed' focusBorderColor='#9B5D73' mb='1rem' size='sm' placeholder='Customer Note' type='text' name='note'/>
+            <Button type='submit'>Submit</Button>
+          </FormControl>
+        </form>
+      </Box>
+    )
+  }
+  else {
+    return (
+      <Box>
+        <Text>Your Appointment Has Been Scheduled</Text>
+        <Text>Appt. Details:</Text>
+        <Text>Cusotmer ID: {customerId}</Text>
+        <Text>Booking Start: {bookingStart}</Text>
+        <Text>Booking Duration: {bookingDur}</Text>
+        <Text>Team Member: {teamMember}</Text>
+        <Text>Customer Note: {customerNote}</Text>
+      </Box>
+    )
+  }
 }

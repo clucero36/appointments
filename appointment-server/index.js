@@ -145,6 +145,7 @@ app.post("/create", async (req, res, next) => {
         startAt: JSONserviceData.startAt,
       }
     })
+    console.log(booking);
     res.send('http://localhost:3000/appointmentConfirm');
   } catch (error) {
     console.error(error);

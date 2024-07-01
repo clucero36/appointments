@@ -13,6 +13,7 @@ const replacer = (key, value) => key === 'version' || key === 'serviceDuration' 
 
 exports.getCatalogServices = functions.https.onRequest((req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
+  
   async function getCatalogItems() {
     let { result: { items }} = await catalogApi.searchCatalogItems({
       enabledLocationIds: [ `${process.env.SQUARE_LOCATION_ID}` ],
@@ -100,6 +101,53 @@ exports.getTeamMemberServiceData = functions.https.onRequest((req, res) => {
 
   teamMemberServiceData().then((x) => {
     res.json(JSON.stringify(x, replacer));
-  })
+  });
+});
 
-})
+exports.createAppointment = functions.https.onRequest((req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  const JSONdata = JSON.parse(req.query.data);
+  const JSONserviceData = JSONdata.serviceData;
+  const JSONuserData = JSONdata.userData;
+
+  async function getCustomerId(firstName, lastName, email) {
+    const { result: { customer } } = await customersApi.createCustomer({
+      emailAddress: email, 
+      familyName: lastName,
+      givenName: firstName,
+      referenceId: "BOOKINGS-SAMPLE-APP",
+    })
+  
+    return customer.id;
+  }
+
+  async function getBooking(customerId) {
+    const { result: { booking } } = await bookingsApi.createBooking({
+      booking: {
+        appointmentSegments: [
+          {
+            serviceVariationId: JSONserviceData.serviceVersion,
+            serviceVariationVersion: JSONserviceData.serviceItem.version,
+            teamMemberId: JSONserviceData.teamMemberBookingProfile.teamMemberId,
+          }
+        ],
+        customerId: customerId,
+        customerNote: JSONuserData.note,
+        locationId: `${process.env.SQUARE_LOCATION_ID}`,
+        locationType: 'BUSINESS_LOCATION',
+        startAt: JSONserviceData.startAt,
+      }
+    })
+
+    return booking;
+  }
+  JSONserviceData.teamMemberBookingProfile.displayName
+  getCustomerId(JSONuserData.firstName, JSONuserData.lastName, JSONuserData.email)
+    .then((customerId) => {
+  getBooking(customerId)
+    .then((booking) => {
+  res.json({booking: JSON.stringify(booking, replacer), teamMember: JSON.stringify(JSONserviceData.teamMemberBookingProfile.displayName, replacer)});
+    })
+  });
+
+});
