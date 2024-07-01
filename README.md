@@ -16,5 +16,9 @@ To Do:
 
 - Prevent past dates being selected
 
-- Deploy cloud functions
+- UI Update
+
+- Middleware Refactor
+
+- Req / Res Refactor
 
