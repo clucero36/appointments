@@ -1,4 +1,5 @@
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
+import Link from 'next/link';
 import {
   Box, 
   Text,
@@ -106,6 +107,9 @@ export default function Contact({ serviceDetails }) {
         <Text>Booking Duration: {bookingDur}</Text>
         <Text>Team Member: {teamMember}</Text>
         <Text>Customer Note: {customerNote}</Text>
+        <Link href='/'>
+          <Text>Home</Text>
+        </Link>
       </Box>
     )
   }

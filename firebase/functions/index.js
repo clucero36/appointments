@@ -141,7 +141,7 @@ exports.createAppointment = functions.https.onRequest((req, res) => {
 
     return booking;
   }
-  JSONserviceData.teamMemberBookingProfile.displayName
+  
   getCustomerId(JSONuserData.firstName, JSONuserData.lastName, JSONuserData.email)
     .then((customerId) => {
   getBooking(customerId)
