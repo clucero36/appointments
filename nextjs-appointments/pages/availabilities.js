@@ -18,6 +18,8 @@ export async function getServerSideProps(context) {
         teamMemberId: context.query.teamMemberId,
         serviceVariationId: context.query.serviceVariationId,
         locationId: context.query.locationId,
+        teamMember: context.query.teamMember,
+        service: context.query.serviceName
       }
     }
   }
@@ -47,11 +49,11 @@ export default function Availabilities({ serviceData }) {
       }
     }; // end searchRequest
 
-    let res = await axios.get("https://us-central1-appointments-a917d.cloudfunctions.net/getAvailabilities", {
+    let res = await axios.get("https://us-central1-appointments-a917d.cloudfunctions.net/getAvailabilities?", {
       params: searchRequest
     })
-    
     let dates = JSON.parse(res.data, reviver);
+    console.log(dates);
     setDatesAvail(dates.availabilities);
     let selectedDay = new Date(dates.availabilities[0].startAt);
     setDay(selectedDay.toString().slice(0,15))
@@ -69,6 +71,8 @@ export default function Availabilities({ serviceData }) {
             serviceVersion: serviceData.serviceVariationId,
             teamMemberId: serviceData.teamMemberId,
             startAt: timeSlot.startAt,
+            timeString: timeString,
+            service: serviceData.service,
           }
         }}>
           {timeString}
@@ -78,13 +82,14 @@ export default function Availabilities({ serviceData }) {
   })
 
   return (
-    <Box align='center' p='1rem'>
-      <Text>Availabilites</Text>
+    <Box align='center' p='1rem' mt='5rem' >
+      <Text fontSize='2xl' mb='1rem'>Availabilites</Text>
       <DatePicker 
         inline 
         onSelect={onSelect}
       />
-      <Text>Open Time Slots for {day}</Text>
+      <Text mt='1rem' fontSize='xl'>Select a Date to View Open Time Slots for</Text>
+      <Text mb='1rem' fontSize='xl'>{serviceData.service} service with {serviceData.teamMember}</Text>
       <Box display='flex' flexWrap='wrap' justifyContent='center' gap='2rem'>
         {renderedTimeSlots}
       </Box>

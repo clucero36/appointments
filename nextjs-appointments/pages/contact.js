@@ -16,6 +16,8 @@ export async function getServerSideProps(context) {
   const serviceVersion = context.query.serviceVersion;
   const teamMemberId = context.query.teamMemberId;
   const startAt = context.query.startAt;
+  const timeString = context.query.timeString;
+  const service = context.query.service
   
   const res = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/getTeamMemberServiceData?' + new URLSearchParams({
     serviceId: serviceId,
@@ -28,14 +30,16 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      serviceDetails: data
+      serviceDetails: data,
+      timeString: timeString,
+      service: service,
     }
   }
 }
 
 // service data is passed as props
 // client fills out the contact form, and an appointment is scheduled after a request to /create endpoint
-export default function Contact({ serviceDetails }) {
+export default function Contact({ serviceDetails, timeString, service }) {
   const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' || key === 'serviceVariationVersion' ? BigInt(value) : value;
   const replacer = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' || key === 'serviceVariationVersion' ? value.toString() : value;
   const [customerId, setCustomerId] = useState('');
@@ -62,7 +66,7 @@ export default function Contact({ serviceDetails }) {
       },
       data: JSON.stringify({userData, serviceData}, replacer),
     }
-
+    
     axios.get('https://us-central1-appointments-a917d.cloudfunctions.net/createAppointment', {
       params: params
     }).then((res) => {
@@ -79,7 +83,7 @@ export default function Contact({ serviceDetails }) {
     customerNote === '' && bookingDur === '' &&
     teamMember === '') {
     return (
-      <Box w='95%' m='2rem auto'>
+      <Box w='75%' m='2rem auto'>
         <Text textAlign='center'>Fill Out Your Contact Information To Complete The Booking</Text>
         <form onSubmit={handleSubmit}>
           <FormControl mt='2rem' p='10px' border='1px' borderRadius='md' borderColor='#9B5D73'>
@@ -99,18 +103,21 @@ export default function Contact({ serviceDetails }) {
   }
   else {
     return (
-      <Box>
-        <Text>Your Appointment Has Been Scheduled</Text>
-        <Text>Appt. Details:</Text>
-        <Text>Cusotmer ID: {customerId}</Text>
-        <Text>Booking Start: {bookingStart}</Text>
-        <Text>Booking Duration: {bookingDur}</Text>
-        <Text>Team Member: {teamMember}</Text>
-        <Text>Customer Note: {customerNote}</Text>
-        <Link href='/'>
-          <Text>Home</Text>
-        </Link>
-      </Box>
+      <>
+        <Text align='center' fontSize='2xl' m='5rem auto'>Thank you for your business!</Text>
+        <Box align='left' p='1rem' m='5rem auto' w='50%' display='flex' flexDir='column' gap='1rem' border='1px'>
+          <Text align='center'>Appointment Details</Text>
+          <Text>Cusotmer ID: {customerId}</Text>
+          <Text>Booked Service: {service}</Text>
+          <Text>Booking Start: {timeString}</Text>
+          <Text>Booking Duration: {bookingDur}</Text>
+          <Text>Team Member: {teamMember}</Text>
+          <Text>Customer Note: {customerNote}</Text>
+          <Link href='/'>
+            <Text align='center'>Home</Text>
+          </Link>
+        </Box>
+      </>
     )
   }
 }

@@ -10,7 +10,6 @@ import Link from 'next/link';
 export async function getServerSideProps(context) {
   const serviceID = context.query.serviceId;
 
-  //http://localhost:3030/staff/${serviceID}
   const res = await fetch(`https://us-central1-appointments-a917d.cloudfunctions.net/getStaffServiceVersion?serviceID=${serviceID}`)
   
   const data = await res.json();
@@ -45,9 +44,11 @@ export default function StaffSelect({ staffData }) {
           teamMemberId: `${teamMember.id}`,
           serviceVariationId: `${service.object.itemData.variations[0].id}`,
           locationId: team[0].assignedLocations.locationIds[0],
+          teamMember: `${teamMember.givenName}`,
+          serviceName: `${service.object.itemData.name}`
         }
       }}>
-        <Box border='1px'>
+        <Box border='1px' p='1rem' m='.5rem auto' borderRadius='sm' w='50%'>
           <Text>{teamMember.givenName}</Text>
           <Text>{teamMember.familyName}</Text>
           <Text>{teamMember.emailAddress}</Text>
@@ -59,11 +60,9 @@ export default function StaffSelect({ staffData }) {
 
   return (
     <Box p='5rem' align='center'>
-      <Text>StaffSelect Page</Text>
-      <Text>You Have Selected the {service.object.itemData.name} Service</Text>
-      <Text>{service.object.itemData.description}</Text>
+      <Text fontSize='2xl'>StaffSelect</Text>
+      <Text>Select a Staff Member for the {service.object.itemData.name} Service</Text>
       <Box align='left'>
-        <Text>Select a Team Member:</Text>
         {renderedTeam}
       </Box>
     </Box>

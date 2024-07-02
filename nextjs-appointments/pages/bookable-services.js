@@ -43,16 +43,15 @@ export default function BookableServices({ serviceData }) {
             serviceId: `${service.id}`,
           }
         }}>
-          {service.itemData.name}
+          <Text border='1px' p='1rem' m='.5rem' borderRadius='sm' w='50%'>{service.itemData.name}</Text>
         </Link>
       </Box>
     )
   })
-  return (   
+  return (
     <Box align='center' h='97.5vh' m='.5rem' border='2px' borderColor='#988686' borderRadius='xl'>
       <Header />
-      <Text>Book An Appointment With Me!</Text>
-      <Text>Coming Soon!</Text>
+      <Text fontSize='2xl'>Select a Service</Text>
       {renderedServices}
     </Box>
   )
