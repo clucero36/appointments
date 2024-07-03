@@ -89,7 +89,7 @@ export default function Availabilities({ serviceData }) {
         onSelect={onSelect}
       />
       <Text mt='1rem' fontSize='xl'>Select a Date to View Open Time Slots for</Text>
-      <Text mb='1rem' fontSize='xl'>{serviceData.service} service with {serviceData.teamMember}</Text>
+      <Text mb='1rem' fontSize='xl'>{serviceData.service} service with {serviceData.teamMember} on {day}</Text>
       <Box display='flex' flexWrap='wrap' justifyContent='center' gap='2rem'>
         {renderedTimeSlots}
       </Box>

@@ -48,7 +48,7 @@ export default function StaffSelect({ staffData }) {
           serviceName: `${service.object.itemData.name}`
         }
       }}>
-        <Box border='1px' p='1rem' m='.5rem auto' borderRadius='sm' w='50%'>
+        <Box border='1px' p='1rem' m='.5rem auto' borderRadius='sm' w={['100%', '95%', '50%']}>
           <Text>{teamMember.givenName}</Text>
           <Text>{teamMember.familyName}</Text>
           <Text>{teamMember.emailAddress}</Text>
