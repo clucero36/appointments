@@ -1,7 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { overrides  } from '../themes/themeIndex';
-import Layout from '../components/layout';
 import "@fontsource/actor"
+import Layout from '../components/Layout'
 
 function MyApp({ Component, pageProps }) {
   return (
