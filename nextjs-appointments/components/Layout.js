@@ -1,12 +1,14 @@
 import React from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import {
-  Box, 
+  Box,
+  calc, 
 } from '@chakra-ui/react';
 
 export default function Layout({children}) {
   return (
-    <Box m='.5rem' border='2px' h='100%' borderColor='#9B5D73' borderRadius='xl'>
+    <Box border='2px' borderColor='#9B5D73' borderRadius='xl' m='1rem' h='calc(100vh - 2rem)'>
       <Header />
       <main>{children}</main>
     </Box>

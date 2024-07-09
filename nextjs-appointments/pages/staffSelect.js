@@ -59,7 +59,7 @@ export default function StaffSelect({ staffData }) {
   })
 
   return (
-    <Box p='5rem' align='center' h='86vh'>
+    <Box p='5rem' align='center'>
       <Text fontSize='2xl'>StaffSelect</Text>
       <Text>Select a Staff Member for the {service.object.itemData.name} Service</Text>
       <Box align='left'>

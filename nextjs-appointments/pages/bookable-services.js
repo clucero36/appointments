@@ -55,7 +55,7 @@ export default function BookableServices({ serviceData }) {
     )
   })
   return (
-    <Box align='center' h='86vh'>
+    <Box align='center'>
       <Text fontSize='2xl'>Select a Service</Text>
       {renderedServices}
     </Box>

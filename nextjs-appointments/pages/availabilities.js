@@ -82,7 +82,7 @@ export default function Availabilities({ serviceData }) {
   })
 
   return (
-    <Box align='center' p='1rem' h='86vh'>
+    <Box align='center' p='1rem' >
       <Text fontSize='2xl' mb='1rem'>Availabilites</Text>
       <DatePicker 
         inline 
