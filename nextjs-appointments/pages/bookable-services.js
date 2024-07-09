@@ -4,27 +4,33 @@ import {
   Text,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import Header from '../components/Header';
 
 // pre rendering method makes a request to express server
 // passes services retrieved in response as props to 
 // BookableServices
 export async function getServerSideProps() {
 
-  const res = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/getCatalogServices');
-  
-  const data = await res.json();
-  
-  if (!data) {
-    return {
-      notFound: true,
-    }
-  }
+  const url = 'https://us-central1-appointments-a917d.cloudfunctions.net/getCatalogServices'
 
-  return { 
-    props: {
-      serviceData: data
-    }
+  try {
+    const res = await fetch(url);
+
+    if (!res.ok) 
+      throw new Error(`Response status: ${res.status}`);
+
+    const data = await res.json();
+
+    if (!data) 
+      return {notFound: true}
+
+    return { 
+      props: {
+        serviceData: data
+      }
+    } 
+  }
+  catch (error) {
+    console.error(error.message);
   }
 }
 
@@ -49,8 +55,7 @@ export default function BookableServices({ serviceData }) {
     )
   })
   return (
-    <Box align='center' h='97.5vh' m='.5rem' border='2px' borderColor='#988686' borderRadius='xl'>
-      <Header />
+    <Box align='center' h='86vh'>
       <Text fontSize='2xl'>Select a Service</Text>
       {renderedServices}
     </Box>

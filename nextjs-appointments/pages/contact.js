@@ -83,7 +83,7 @@ export default function Contact({ serviceDetails, timeString, service }) {
     customerNote === '' && bookingDur === '' &&
     teamMember === '') {
     return (
-      <Box w='75%' m='2rem auto'>
+      <Box w='75%' m='0 auto' h='86vh'>
         <Text textAlign='center'>Fill Out Your Contact Information To Complete The Booking</Text>
         <form onSubmit={handleSubmit}>
           <FormControl mt='2rem' p='10px' border='1px' borderRadius='md' borderColor='#9B5D73'>
@@ -103,9 +103,9 @@ export default function Contact({ serviceDetails, timeString, service }) {
   }
   else {
     return (
-      <>
-        <Text align='center' fontSize='2xl' m='5rem auto'>Thank you for your business!</Text>
-        <Box align='left' p='1rem' m='5rem auto' w='50%' display='flex' flexDir='column' gap='1rem' border='1px'>
+      <Box h='86vh'>
+        <Text align='center' fontSize='2xl' m='0 auto'>Thank you for your business!</Text>
+        <Box align='left' p='1rem' m='5rem auto' w={['80%', '60%']} display='flex' flexDir='column' gap='1rem' border='1px'>
           <Text align='center'>Appointment Details</Text>
           <Text>Cusotmer ID: {customerId}</Text>
           <Text>Booked Service: {service}</Text>
@@ -117,7 +117,7 @@ export default function Contact({ serviceDetails, timeString, service }) {
             <Text align='center'>Home</Text>
           </Link>
         </Box>
-      </>
+      </Box>
     )
   }
 }
