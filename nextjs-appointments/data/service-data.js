@@ -2,24 +2,24 @@
 
 const serviceData = [
   {
-    service: 'Brow Lamination',
-    imageSrc: '/static/img/browlam.PNG',
-    desc: 'Perm your brow hairs to get straighter, upward-facing hairs that are set in place. It can help get rid of the appearance of bare patches and irregular hairs, as well as make thin brows look way fuller'
+    service: 'Color Treatment',
+    desc: 'Transform your look with our expert hair color treatment, offering personalized, vibrant shades and long-lasting results for healthy, shiny, and beautiful hair.'
   },
   {
-    service: 'Full Face Wax',
-    desc: 'The full face waxing service consists of hair being removed from your eyebrows, lip, cheeks, sideburns, chin, and nose. The entire hair follicle is removed when being waxed out and results in a much smoother feel than shaving',
-    imageSrc: '/static/img/browlam.PNG',
+    service: 'Men\'s Haircut',
+    desc: 'TAchieve a fresh, stylish look with our professional men\'s haircut service, tailored to your preferences for a precise, polished finish every time.',
   },
   {
-    service: 'Brow Shaping',
-    imageSrc: '/static/img/browlam.PNG',
-    desc: 'Brow shaping involves waxing and tweezing along your brows natural lines to ensure a perfect contour. It opens up your face, brightens your eyes, and highlights your bone structure.',
+    service: 'Shampoo Style',
+    desc: 'Revitalize your hair with our luxurious shampoo and style service, leaving you with clean, beautifully styled hair that\'s ready for any occasion.',
   },
   {
-    service: 'Lash Lift',
-    imageSrc: '/static/img/browlam.PNG',
-    desc: 'All-natural, semi-permanent procedure that gives you the appearance of fuller, thicker eyelashes without the use of any leave-on chemicals or extensions. The natural lashes are boosted from the root, giving them a lifted, lengthened appearance.'
+    service: 'Wax Lam',
+    desc: 'Enhance and define your brows with our professional eyebrow wax and lamination service, delivering perfectly shaped, fuller-looking brows that last.'
+  },
+  {
+    service: 'Women\'s Haircut',
+    desc: 'Experience a fresh, beautiful look with our expert women\'s haircut service, tailored to your style and preferences for a perfect finish every time.'
   }
 ]
 

@@ -7,11 +7,10 @@ import {
 
 const ServiceCard = ({props}) => {
 
-
   return (
-    <Box w={['95%', '95%', '50%']} m='0 auto'>
-      <Box borderRadius='xl' p='1rem' backgroundColor='#C38B8B' color='white'>
-        <Text fontWeight='bold' fontSize='xl' borderBottom='1px' mb='.5rem' borderColor='#9B5D73'>{props.service}</Text>
+    <Box w={['95%', '95%', '85%', '85%','50%']} m='0 auto'>
+      <Box borderRadius='xl' p={['.5rem', '1rem']} backgroundColor='#C38B8B' color='white'>
+        <Text fontWeight='bold' fontSize={['large', 'xl']} borderBottom='1px' mb='.5rem' borderColor='#9B5D73'>{props.service}</Text>
         <Box borderBottom='1px' borderColor='#9B5D73'>
           <Text w='95%' fontSize='sm' lineHeight='19px' m='0 auto' mb='.5rem' >
             {props.desc}
