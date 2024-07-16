@@ -16,9 +16,5 @@ To Do:
 
 - Prevent past dates being selected
 
-- UI Update
-
-- Middleware Refactor
-
-- Req / Res Refactor
+- App router & server component refactor
 
