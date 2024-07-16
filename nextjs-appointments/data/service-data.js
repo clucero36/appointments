@@ -7,7 +7,7 @@ const serviceData = [
   },
   {
     service: 'Men\'s Haircut',
-    desc: 'TAchieve a fresh, stylish look with our professional men\'s haircut service, tailored to your preferences for a precise, polished finish every time.',
+    desc: 'Achieve a fresh, stylish look with our professional men\'s haircut service, tailored to your preferences for a precise, polished finish every time.',
   },
   {
     service: 'Shampoo Style',
