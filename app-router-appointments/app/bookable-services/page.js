@@ -1,8 +1,12 @@
 
-
+import Services from "../ui/Services";
 
 export default function Page() {
+
   return (
-    <div>Bookable Services Page</div>
+    <div>
+      <div>Select a Service</div>
+      <Services />
+    </div>
   )
 }
