@@ -1,18 +1,14 @@
-import TimeSlots from "../ui/TimeSlots";
+
 import Calander from "../ui/Calander";
+import TimeSlots from "../ui/TimeSlots";
 
-export default async function Page({ searchParams }) {
+export default function Page({ searchParams }) {
 
-  const dateParam = searchParams?.date || '';
-
-  console.log(dateParam);
-
-  
   return (
     <div>
       Availabilites Page
       <Calander />
-      <TimeSlots />
+      <TimeSlots params={searchParams}/>
     </div>
   )
 }

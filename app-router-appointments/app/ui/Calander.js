@@ -1,6 +1,8 @@
 'use client'
 
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Calander() {
   const searchParams = useSearchParams();
@@ -10,7 +12,6 @@ export default function Calander() {
   function handleSearch(date) {
     const params = new URLSearchParams(searchParams);
     if (date) {
-      params.delete('date');
       params.set('date', date);
     }
     else {
@@ -21,9 +22,7 @@ export default function Calander() {
 
   return (
     <div>
-      Calander
-      <button onClick={() => handleSearch('date1')}>date1</button>
-      <button onClick={() => handleSearch('date2')}>date2</button>
+      <DatePicker inline onSelect={(date) => handleSearch(date)}/>
     </div>
   )
 }
