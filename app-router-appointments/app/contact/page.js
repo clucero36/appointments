@@ -1,12 +1,11 @@
-
+import AppointmentForm from "../ui/AppointmentForm";
 
 export default function Page({ searchParams }) {
-
-  console.log(searchParams);
 
   return (
     <div>
       Contact Page
+      <AppointmentForm params={searchParams}/>
     </div>
   )
 }

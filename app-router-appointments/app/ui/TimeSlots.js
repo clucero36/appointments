@@ -25,6 +25,7 @@ export default async function TimeSlots({ params }) {
         }
       }
     };
+    // can possibly build the params manually. axios handles that for us. 
     let res = await axios.get("https://us-central1-appointments-a917d.cloudfunctions.net/getAvailabilities?", {
       params: searchRequest
     })
