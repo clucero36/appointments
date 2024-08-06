@@ -29,7 +29,7 @@ export async function createAppointment(formData) {
   const data = await res.json();
   const serviceData = JSON.parse(data, reviver);
 
-  const response = await fetch('http://127.0.0.1:5001/appointments-a917d/us-central1/createAppointment', {
+  const response = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/createAppointment', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +37,5 @@ export async function createAppointment(formData) {
     },
     body: JSON.stringify({userData, serviceData}, replacer),
   })
-  // failing due to cloudfunction accessing req.query.params & not req.body
   console.log(response);
 }
-// https://us-central1-appointments-a917d.cloudfunctions.net/createAppointment

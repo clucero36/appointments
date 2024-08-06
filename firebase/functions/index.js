@@ -106,9 +106,23 @@ exports.getTeamMemberServiceData = functions.https.onRequest((req, res) => {
 
 exports.createAppointment = functions.https.onRequest((req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
-  const JSONdata = JSON.parse(req.query.data);
-  const JSONserviceData = JSONdata.serviceData;
-  const JSONuserData = JSONdata.userData;
+  var JSONserviceData;
+  var JSONuserData;
+
+  // handles request from app-router front end. if there is no query, we have data in the body
+  if (Object.keys(req.query).length === 0) {
+    JSONserviceData = req.body.serviceData;
+    JSONuserData = req.body.userData;
+  }
+  // handle request from page-router front end. if there is no body, we have data in the query
+  else if (Object.keys(req.body).length === 0) {
+    const JSONdata = JSON.parse(req.query.data);
+    JSONserviceData = JSONdata.serviceData;
+    JSONuserData = JSONdata.userData;
+  }
+  else {
+    res.status(500).send('Something broke!')
+  }
 
   async function getCustomerId(firstName, lastName, email) {
     const { result: { customer } } = await customersApi.createCustomer({
