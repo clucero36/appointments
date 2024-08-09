@@ -17,7 +17,7 @@ export async function getServerSideProps(context) {
   const teamMemberId = context.query.teamMemberId;
   const startAt = context.query.startAt;
   const timeString = context.query.timeString;
-  const service = context.query.service
+  const service = context.query.service;
   
   const res = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/getTeamMemberServiceData?' + new URLSearchParams({
     serviceId: serviceId,
@@ -42,46 +42,58 @@ export async function getServerSideProps(context) {
 export default function Contact({ serviceDetails, timeString, service }) {
   const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' || key === 'serviceVariationVersion' ? BigInt(value) : value;
   const replacer = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' || key === 'serviceVariationVersion' ? value.toString() : value;
-  const [customerId, setCustomerId] = useState('');
-  const [bookingStart, setBookingStart] = useState('');
   const [customerNote, setCustomerNote] = useState('');
-  const [bookingDur, setBookingDur] = useState('');
   const [teamMember, setTeamMember] = useState('');
+  const [custFname, setCustFname] = useState('');
+  const [custLname, setCustLname] = useState('');
+  const [custEmail, setCustEmail] = useState('');
+    // const [bookingDur, setBookingDur] = useState('');
+    // const [customerId, setCustomerId] = useState('');
+
   let serviceData = JSON.parse(serviceDetails, reviver);
+  console.log(serviceData);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event) => { 
     event.preventDefault();
-    let userData = {
-      firstName: event.target.first.value,
-      lastName: event.target.last.value,
-      email: event.target.email.value,
-      note: event.target.note.value,
-    }
-
-    const params = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
-      data: JSON.stringify({userData, serviceData}, replacer),
-    }
-    
-    axios.get('https://us-central1-appointments-a917d.cloudfunctions.net/createAppointment', {
-      params: params
-    }).then((res) => {
-      let booking = JSON.parse(res.data.booking, reviver);
-      setBookingStart(booking.startAt);
-      setCustomerId(booking.customerId);
-      setCustomerNote(booking.customerNote);
-      setBookingDur(booking.appointmentSegments[0].durationMinutes);
-      setTeamMember(res.data.teamMember);
-    })
+    setTeamMember(serviceData.teamMemberBookingProfile.displayName);
+    setCustomerNote(event.target.note.value);
+    setCustFname(event.target.first.value);
+    setCustLname(event.target.last.value);
+    setCustEmail(event.target.email.value);
   }
 
-  if (bookingStart === '' && customerId === '' && 
-    customerNote === '' && bookingDur === '' &&
-    teamMember === '') {
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   let userData = {
+  //     firstName: event.target.first.value,
+  //     lastName: event.target.last.value,
+  //     email: event.target.email.value,
+  //     note: event.target.note.value,
+  //   }
+
+  //   const params = {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Access-Control-Allow-Origin': '*'
+  //     },
+  //     data: JSON.stringify({userData, serviceData}, replacer),
+  //   }
+    
+  //   axios.get('https://us-central1-appointments-a917d.cloudfunctions.net/createAppointment', {
+  //     params: params
+  //   }).then((res) => {
+  //     let booking = JSON.parse(res.data.booking, reviver);
+  //     setBookingStart(booking.startAt);
+  //     setCustomerId(booking.customerId);
+  //     setCustomerNote(booking.customerNote);
+  //     setBookingDur(booking.appointmentSegments[0].durationMinutes);
+  //     setTeamMember(res.data.teamMember);
+  //   })
+  // }
+
+  if (customerNote === '' && teamMember === '' && custFname === '' &&
+    custLname === '' && custEmail === '') {
     return (
       <Box w='75%' m='0 auto' >
         <Text textAlign='center'>Fill Out Your Contact Information To Complete The Booking</Text>
@@ -107,11 +119,14 @@ export default function Contact({ serviceDetails, timeString, service }) {
         <Text align='center' fontSize='2xl' m='0 auto'>Thank you for your business!</Text>
         <Box align='left' p='1rem' m='5rem auto' w={['80%', '60%']} display='flex' flexDir='column' gap='1rem' border='1px'>
           <Text align='center'>Appointment Details</Text>
-          <Text>Cusotmer ID: {customerId}</Text>
+          {/* <Text>Cusotmer ID: {customerId}</Text> */}
           <Text>Booked Service: {service}</Text>
+          <Text>Appointment Date: {serviceData.startAt.slice(0, 10)}</Text>
           <Text>Booking Start: {timeString}</Text>
-          <Text>Booking Duration: {bookingDur}</Text>
+          {/* <Text>Booking Duration: {bookingDur}</Text> */}
           <Text>Team Member: {teamMember}</Text>
+          <Text>Customer Name: {custLname}, {custFname}</Text>
+          <Text>Customer Email: {custEmail}</Text>
           <Text>Customer Note: {customerNote}</Text>
           <Link href='/'>
             <Text align='center'>Home</Text>
