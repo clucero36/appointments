@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import axios from 'axios';
+import { getEndAtDate, getTimeString } from '../lib/util';
 
 
 export default async function TimeSlots({ params }) {
@@ -35,6 +36,9 @@ export default async function TimeSlots({ params }) {
 
   if (timeSlots.length !== 0) {
     renderedTimeSlots = timeSlots.map((timeSlot, index) => {
+
+      let appointmentStartTime = new Date(timeSlot.startAt);
+      let timeString = getTimeString(appointmentStartTime)
       return (
         <div key={index}>
           <Link href={{
@@ -45,9 +49,10 @@ export default async function TimeSlots({ params }) {
               teamMemberId: params.teamMemberId,
               startAt: timeSlot.startAt,
               service: params.service,
+              timeString: timeString,
             }
           }}>
-            {timeSlot.startAt}
+            {timeString}
           </Link>
         </div>
       )
@@ -59,10 +64,4 @@ export default async function TimeSlots({ params }) {
       {renderedTimeSlots}
     </div>
   )
-}
-
-function getEndAtDate(date) {
-  const endDate = new Date(date);
-  endDate.setDate(endDate.getDate() + 1);
-  return endDate;
 }

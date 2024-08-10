@@ -56,6 +56,12 @@ export default function AppointmentForm({ params }) {
         id='startAt'
         value={`${params.startAt}`}
       />
+      <input 
+        type='hidden'
+        name='timeString'
+        id='timeString'
+        value={`${params.timeString}`}
+      />
       <input type='submit' />
     </form>
   )

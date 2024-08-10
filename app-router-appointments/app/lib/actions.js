@@ -19,6 +19,7 @@ export async function createAppointment(formData) {
     serviceVersion: formData.get('serviceVersion'),
     teamMemberId: formData.get('teamMemberId'),
     startAt: formData.get('startAt'),
+    timeString: formData.get('timeString'),
   }
 
   // make a requeest to get teamMember serviceData
@@ -32,14 +33,25 @@ export async function createAppointment(formData) {
   const data = await res.json();
   const serviceData = JSON.parse(data, reviver);
 
-  const response = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/createAppointment', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    },
-    body: JSON.stringify({userData, serviceData}, replacer),
-  })
+  //URL params for thankyou page
+  const params = {
+    teamMemberName: serviceData.teamMemberBookingProfile.displayName,
+    service: serviceData.serviceItem.itemData.name,
+    customerName: userData.firstName,
+    customerEmail: userData.email,
+    apptStart: service.startAt,
+    timeString: service.timeString,
+  }
 
-  redirect('/thankyou');
+  // const response = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/createAppointment', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Access-Control-Allow-Origin': '*'
+  //   },
+  //   body: JSON.stringify({userData, serviceData}, replacer),
+  // })
+
+  let URLParams = new URLSearchParams(params).toString()
+  redirect(`/thankyou?${URLParams}`);
 }
