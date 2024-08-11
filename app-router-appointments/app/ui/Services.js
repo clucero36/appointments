@@ -23,7 +23,7 @@ export default async function Services() {
   const services = JSON.parse(data.items, reviver);
   let renderedServices = services.map((service) => {
     return (
-      <div key={service.id}>
+      <div key={service.id} className="border border-[#9b5d73] p-2 hover:border-[#c38b8b] w-2/5 mx-auto">
         <Link href={{
           pathname: '/staff-select',
           query: {
@@ -37,7 +37,7 @@ export default async function Services() {
   });
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       {renderedServices}
     </div>
   )

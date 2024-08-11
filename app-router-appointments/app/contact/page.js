@@ -4,7 +4,7 @@ export default function Page({ searchParams }) {
 
   return (
     <div>
-      Contact Page
+      <div className='text-2xl font-bold my-8'>Contact Page</div>
       <AppointmentForm params={searchParams}/>
     </div>
   )

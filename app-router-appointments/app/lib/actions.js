@@ -3,7 +3,6 @@
 import { redirect } from 'next/navigation';
 
 const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' || key === 'serviceVariationVersion' ? BigInt(value) : value;
-const replacer = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' || key === 'serviceVariationVersion' ? value.toString() : value;
 
 export async function createAppointment(formData) {
 

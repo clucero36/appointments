@@ -25,7 +25,7 @@ export default async function Staff({serviceId}) {
 
   let renderedTeam = team.map((teamMember) => {
     return (
-      <Link key={teamMember.id} href={{
+      <Link className=" w-2/5 mx-auto" key={teamMember.id} href={{
         pathname: '/availabilities',
         query: {
           serviceId: `${service.object.id}`,
@@ -37,7 +37,7 @@ export default async function Staff({serviceId}) {
           serviceName: `${service.object.itemData.name}`
         }
       }}>
-        <div>
+        <div className="border border-[#9b5d73] p-2 hover:border-[#c38b8b]">
           <div>{teamMember.givenName}</div>
           <div>{teamMember.familyName}</div>
           <div>{teamMember.emailAddress}</div>
@@ -48,8 +48,7 @@ export default async function Staff({serviceId}) {
   })
 
   return (
-    <div>
-      Staff
+    <div className="flex flex-col gap-4">
       {renderedTeam}
     </div>
   )

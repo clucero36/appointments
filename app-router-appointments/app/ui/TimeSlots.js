@@ -40,7 +40,7 @@ export default async function TimeSlots({ params }) {
       let appointmentStartTime = new Date(timeSlot.startAt);
       let timeString = getTimeString(appointmentStartTime)
       return (
-        <div key={index}>
+        <div key={index} className="border border-[#9b5d73] p-2 hover:border-[#c38b8b] basis-28">
           <Link href={{
             pathname: '/contact',
             query: {
@@ -60,7 +60,7 @@ export default async function TimeSlots({ params }) {
   }
 
   return (
-    <div>
+    <div className="flex flex-wrap justify-center w-4/5 lg:w-3/5 mx-auto gap-4 align-center my-4">
       {renderedTimeSlots}
     </div>
   )

@@ -3,9 +3,10 @@ import { createAppointment } from "../lib/actions"
 export default function AppointmentForm({ params }) {
 
   return (
-    <form action={createAppointment} >
+    <form action={createAppointment} className='flex flex-col w-4/5 lg:w-3/5 gap-4 mx-auto'>
       <label></label>
       <input
+        className="h-8"
         type='text'
         placeholder='First Name'
         name='fname'
@@ -13,6 +14,7 @@ export default function AppointmentForm({ params }) {
       />
       <label></label>
       <input
+        className="h-8"
         type='text'
         placeholder='Last Name'
         name='lname'
@@ -20,6 +22,7 @@ export default function AppointmentForm({ params }) {
       />
       <label></label>
       <input
+        className="h-8"
         type='text'
         placeholder='Email'
         name='email'
@@ -27,6 +30,7 @@ export default function AppointmentForm({ params }) {
       />
       <label></label>
       <input
+        className="h-8"
         type='text'
         placeholder='Note'
         name='note'
@@ -62,7 +66,7 @@ export default function AppointmentForm({ params }) {
         id='timeString'
         value={`${params.timeString}`}
       />
-      <input type='submit' />
+      <input type='submit' className="w-2/5 mx-auto cursor-pointer border border-[#9b5d73] p-2 hover:border-[#c38b8b]"/>
     </form>
   )
 }
