@@ -11,10 +11,9 @@ export default function Page({ searchParams }) {
       <Suspense>
         <Calander />
       </Suspense>
-      <Suspense>
+      <Suspense >
         <TimeSlots params={searchParams}/>
       </Suspense>
-      
     </div>
   )
 }

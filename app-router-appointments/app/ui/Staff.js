@@ -25,7 +25,7 @@ export default async function Staff({serviceId}) {
 
   let renderedTeam = team.map((teamMember) => {
     return (
-      <Link className="w-4/5 lg:w-3/5 mx-auto" key={teamMember.id} href={{
+      <Link className="w-4/5 lg:w-2/5 mx-auto" key={teamMember.id} href={{
         pathname: '/availabilities',
         query: {
           serviceId: `${service.object.id}`,

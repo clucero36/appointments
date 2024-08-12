@@ -9,7 +9,7 @@ export default function AppointmentForm({ params }) {
   const [email, setEmail] = useState('');
 
   return (
-    <form action={createAppointment} className='flex flex-col w-4/5 lg:w-3/5 gap-4 mx-auto' autocomplete="off">
+    <form action={createAppointment} className='flex flex-col w-4/5 lg:w-2/5 gap-4 mx-auto' autocomplete="off">
       <input
         className="h-8 block w-full border-0 py-1.5 pl-2 bg-[#c38b8b] ring-1 ring-inset ring-[#9b5d73] text-black placeholder:text-black focus:outline-none rounded-md"
         type='text'
