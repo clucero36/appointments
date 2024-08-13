@@ -7,12 +7,6 @@ const reviver = (key, value) => key === 'version' || key === 'serviceDuration' |
 export async function createAppointment(formData) {
 
   // grab form data
-  const userData = {
-    firstName: formData.get('fname'),
-    lastName: formData.get('lname'),
-    email: formData.get('email'),
-    note: formData.get('note'),
-  }
   const service = {
     serviceId: formData.get('serviceId'),
     serviceVersion: formData.get('serviceVersion'),
@@ -36,8 +30,8 @@ export async function createAppointment(formData) {
   const params = {
     teamMemberName: serviceData.teamMemberBookingProfile.displayName,
     service: serviceData.serviceItem.itemData.name,
-    customerName: userData.firstName,
-    customerEmail: userData.email,
+    customerName: formData.get('fname'),
+    customerEmail: formData.get('email'),
     apptStart: service.startAt,
     timeString: service.timeString,
   }
