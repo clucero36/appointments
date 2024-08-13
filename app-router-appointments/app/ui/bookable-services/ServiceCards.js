@@ -22,14 +22,16 @@ export default async function ServicesCards() {
   const services = JSON.parse(data.items, reviver);
   let renderedServices = services.map((service) => {
     return (
-      <div key={service.id} className="border border-[#9b5d73] p-2 hover:border-[#c38b8b] w-2/5 mx-auto">
+      <div key={service.id} >
         <Link href={{
           pathname: '/staff-select',
           query: {
             serviceId: `${service.id}`,
           }
         }}>
-          {service.itemData.name}
+          <div className="border border-[#9b5d73] p-2 hover:border-[#c38b8b] w-2/5 mx-auto">
+            {service.itemData.name}
+          </div>
         </Link>
       </div>
     )
