@@ -1,5 +1,5 @@
 
-import Services from "../ui/Services";
+import Services from "../ui/bookable-services/Services";
 
 export default function Page() {
 

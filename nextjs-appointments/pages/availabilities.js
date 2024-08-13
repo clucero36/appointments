@@ -53,7 +53,7 @@ export default function Availabilities({ serviceData }) {
       params: searchRequest
     })
     let dates = JSON.parse(res.data, reviver);
-    console.log(dates);
+
     setDatesAvail(dates.availabilities);
     let selectedDay = new Date(dates.availabilities[0].startAt);
     setDay(selectedDay.toString().slice(0,15))

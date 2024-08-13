@@ -14,7 +14,5 @@ Currently being developed with:
 
 To Do: 
 
-- Prevent past dates being selected
-
-- App router & server component refactor
+- Streaming
 

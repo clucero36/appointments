@@ -3,7 +3,7 @@ import Link from "next/link";
 const url = 'https://us-central1-appointments-a917d.cloudfunctions.net/getCatalogServices';
 const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' ? BigInt(value) : value;
 
-export default async function Services() {
+export default async function ServicesCards() {
 
   var data;
 
@@ -14,7 +14,6 @@ export default async function Services() {
       throw new Error(`Response status: ${res.status}`);
 
     data = await res.json();
-
   }
   catch (error) {
     console.error(error.message);
@@ -30,7 +29,7 @@ export default async function Services() {
             serviceId: `${service.id}`,
           }
         }}>
-          <div>{service.itemData.name}</div>
+          {service.itemData.name}
         </Link>
       </div>
     )
