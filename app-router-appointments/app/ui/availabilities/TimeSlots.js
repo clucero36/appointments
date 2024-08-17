@@ -46,21 +46,21 @@ export default async function TimeSlots({ params }) {
           const timeString = getTimeString(appointmentStartTime);
 
           return (
-            <div key={index} className="border border-[#9b5d73] p-2 hover:border-[#c38b8b] basis-28">
-              <Link href={{
-                pathname: '/contact',
-                query: {
-                  serviceId: params.serviceId,
-                  serviceVersion: params.serviceVariationId,
-                  teamMemberId: params.teamMemberId,
-                  startAt: timeSlot.startAt,
-                  service: params.service,
-                  timeString: timeString,
-                }
-              }}>
+            <Link className="border border-[#9b5d73] hover:border-[#c38b8b] basis-28" key={index} href={{
+              pathname: '/contact',
+              query: {
+                serviceId: params.serviceId,
+                serviceVersion: params.serviceVariationId,
+                teamMemberId: params.teamMemberId,
+                startAt: timeSlot.startAt,
+                service: params.service,
+                timeString: timeString,
+              }
+            }}>
+              <div className="p-2">
                 {timeString}
-              </Link>
-            </div>
+              </div>                
+            </Link>
           )
         })
       }
