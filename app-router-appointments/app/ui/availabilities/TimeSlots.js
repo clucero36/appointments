@@ -25,8 +25,7 @@ export default async function TimeSlots({ params }) {
         }
       }
     };
-    console.log('Fetching TimeSlot data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+
     // axios to handle query params
     const res = await axios.get("https://us-central1-appointments-a917d.cloudfunctions.net/getAvailabilities?", {
       params: searchRequest
