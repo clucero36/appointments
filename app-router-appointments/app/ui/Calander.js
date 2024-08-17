@@ -10,25 +10,21 @@ export default function Calander() {
   const { replace } = useRouter();
 
   function handleSearch(date) {
-      const params = new URLSearchParams(searchParams);
-      const today = new Date();
-      params.delete('past')
-      if (date < today) {
-        
-        params.set('past', 'past')
-      }
-      if (date) {
-        params.set('date', date);
-      }
-      else {
-        params.delete('date')
-      }
-      replace(`${pathname}?${params.toString()}`);
+    const params = new URLSearchParams(searchParams);
+    const today = new Date();
+    params.delete('past')
+    if (date < today) {
+      
+      params.set('past', 'past')
+    }
+    if (date) {
+      params.set('date', date);
+    }
+    else {
+      params.delete('date')
+    }
+    replace(`${pathname}?${params.toString()}`);
   }
 
-  return (
-    <div>
-      <DatePicker inline onSelect={(date) => handleSearch(date)}/>
-    </div>
-  )
+  return <DatePicker inline onSelect={(date) => handleSearch(date)}/>
 }

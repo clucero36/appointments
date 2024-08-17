@@ -2,6 +2,7 @@
 import Calander from "../ui/Calander";
 import TimeSlots from "../ui/TimeSlots";
 import { Suspense } from "react";
+import { TimeSlotsSkeleton } from "../ui/skeletons";
 
 export default function Page({ searchParams }) {
 
@@ -11,7 +12,7 @@ export default function Page({ searchParams }) {
       <Suspense>
         <Calander />
       </Suspense>
-      <Suspense >
+      <Suspense fallback={<TimeSlotsSkeleton />}>
         <TimeSlots params={searchParams}/>
       </Suspense>
     </div>

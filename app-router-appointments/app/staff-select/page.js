@@ -1,11 +1,15 @@
-import Staff from "../ui/Staff"
+import Staff from "../ui/staff-select/Staff";
+import { Suspense } from "react";
+import { StaffSkeleton } from "../ui/skeletons";
 
 export default function Page({ searchParams }) {
 
   return (
-    <div>
+    <main>
       <div className='text-2xl font-bold my-8'>Select Your Stylist</div>
-      <Staff serviceId={searchParams.serviceId} />
-    </div>
+      <Suspense fallback={<StaffSkeleton />}>
+        <Staff serviceId={searchParams.serviceId} />
+      </Suspense>
+    </main>
   )
 }
