@@ -14,7 +14,6 @@ export default function Calander() {
     const today = new Date();
     params.delete('past')
     if (date < today) {
-      
       params.set('past', 'past')
     }
     if (date) {

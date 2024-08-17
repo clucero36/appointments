@@ -13,6 +13,11 @@ export function getTimeString(date) {
   let timeString = timeRegEx.exec(dateString)[0]; // timeString: 11:30
   let timeArray = timeString.split(":") // timeArray: 11,30
 
+  timeArray[0] = parseInt(timeArray[0] - 7).toString()
+
+  timeString = timeArray.join(":");
+  
+
   // if time has a leading zero 09:00, return 9:00
   if (timeString[0] === '0') {
     return timeString.slice(1).concat(' a.m.'); // timeString.slice(1): 9:00
