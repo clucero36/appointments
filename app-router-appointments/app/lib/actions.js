@@ -16,20 +16,20 @@ export async function createAppointment(formData) {
   }
 
   // make a requeest to get teamMember serviceData
-  const res = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/getTeamMemberServiceData?' + new URLSearchParams({
-    serviceId: service.serviceId,
-    serviceVersion: service.serviceVersion,
-    teamMemberId: service.teamMemberId,
-    stratAt: service.startAt,
-  }).toString())
+  // const res = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/getTeamMemberServiceData?' + new URLSearchParams({
+  //   serviceId: service.serviceId,
+  //   serviceVersion: service.serviceVersion,
+  //   teamMemberId: service.teamMemberId,
+  //   stratAt: service.startAt,
+  // }).toString())
 
-  const data = await res.json();
-  const serviceData = JSON.parse(data, reviver);
+  // const data = await res.json();
+  // const serviceData = JSON.parse(data, reviver);
 
   //URL params for thankyou page
   const params = {
-    teamMemberName: serviceData.teamMemberBookingProfile.displayName,
-    service: serviceData.serviceItem.itemData.name,
+    // teamMemberName: serviceData.teamMemberBookingProfile.displayName,
+    // service: serviceData.serviceItem.itemData.name,
     customerName: formData.get('fname'),
     customerEmail: formData.get('email'),
     apptStart: service.startAt,
