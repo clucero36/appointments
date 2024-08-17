@@ -8,8 +8,8 @@ export default async function ServicesCards() {
   var data;
 
   try {
-    console.log('Fetching Service data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // console.log('Fetching Service data...');
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
     const res = await fetch(url);
 
     if (!res.ok) 

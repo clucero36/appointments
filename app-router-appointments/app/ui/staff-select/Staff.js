@@ -8,8 +8,8 @@ export default async function Staff({serviceId}) {
 
   try {
     const res = await fetch(url);
-    console.log('Fetching Staff data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // console.log('Fetching Staff data...');
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
     if (!res.ok) 
       throw new Error(`Response status: ${res.status}`);
 
