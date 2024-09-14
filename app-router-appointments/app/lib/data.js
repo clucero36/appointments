@@ -1,6 +1,28 @@
 
+const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' ? BigInt(value) : value;
 
-const serviceData = [
+export async function getServices() {
+  try {
+    const res = await fetch('https://us-central1-appointments-a917d.cloudfunctions.net/getCatalogServices');
+
+    if (!res.ok) 
+      throw new Error(`Response status: ${res.status}`);
+
+    const serviceData = await res.json();
+    const services = JSON.parse(serviceData.items, reviver);
+    return services;
+  }
+  catch (error) {
+    console.error(error.message);
+  }
+
+}
+
+
+
+
+
+export const catalogData = [
   {
     service: 'Color Treatment',
     desc: 'Transform your look with our expert hair color treatment, offering personalized, vibrant shades and long-lasting results for healthy, shiny, and beautiful hair.'
@@ -22,5 +44,3 @@ const serviceData = [
     desc: 'Experience a fresh, beautiful look with our expert women\'s haircut service, tailored to your style and preferences for a perfect finish every time.'
   }
 ]
-
-export default serviceData;

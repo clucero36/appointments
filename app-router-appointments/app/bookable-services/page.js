@@ -7,7 +7,7 @@ export default function Page() {
 
   return (
     <main>
-      <div className='text-2xl font-bold my-8'>Select a Service</div>
+      <div className='text-2xl font-bold mt-6 mb-5'>Select a Service</div>
       <Suspense fallback={<ServicesSkeleton />} >
         <Services />
       </Suspense>

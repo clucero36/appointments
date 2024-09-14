@@ -1,45 +1,29 @@
 import Link from "next/link";
-
-const url = 'https://us-central1-appointments-a917d.cloudfunctions.net/getCatalogServices';
+import { getServices } from "@/app/lib/data";
+import { catalogData } from "@/app/lib/data";
+import ServiceCard from "../ServiceCard";
 
 export default async function ServicesCards() {
 
-  const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' ? BigInt(value) : value;
-  var data;
+  const services = await getServices();
+  const catalogDetails = catalogData;
 
-  try {
-    // console.log('Fetching Service data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
-    const res = await fetch(url);
+  if (!services) return null;
 
-    if (!res.ok) 
-      throw new Error(`Response status: ${res.status}`);
-
-    data = await res.json();
-  }
-  catch (error) {
-    console.error(error.message);
-  }
-
-  const services = JSON.parse(data.items, reviver);
   return (
-    <div className="flex flex-col gap-4">
-      {
-        services.map((service) => {
-          return (
-            <Link className="w-2/5 mx-auto" key={service.id} href={{
+    <>
+      {services.map((service, index) => (
+        <div key={service.id} className="px-4 py-2 sm:px-0 w-4/5 md:w-2/5 mx-auto">
+          <Link href={{
               pathname: '/staff-select',
               query: {
                 serviceId: `${service.id}`,
               }
             }}>
-              <div className="border border-[#9b5d73] p-2 hover:border-[#c38b8b]">
-                {service.itemData.name}
-              </div>
+              <ServiceCard service={service.itemData.name} description={catalogDetails[index].desc} />
             </Link>
-          )
-        })
-      }
-    </div>
+        </div>
+      ))}
+    </>
   )
 }

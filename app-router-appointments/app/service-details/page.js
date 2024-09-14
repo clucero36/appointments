@@ -1,8 +1,10 @@
 
-import serviceData from "../data/data"
+import { catalogData } from "../lib/data"
 import ServiceCard from "../ui/ServiceCard"
 
 export default function Page() {
+
+  const serviceData = catalogData;
 
   const renderedServices = serviceData.map((service, index) => {
     return (
