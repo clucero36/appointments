@@ -1,42 +1,15 @@
 import Link from 'next/link';
-import axios from 'axios';
-import { getEndAtDate, getTimeString } from '../../lib/util';
+import { getTimeString } from '../../lib/util';
+import { getTimeSlots } from '@/app/lib/data';
 
-export default async function TimeSlots({ params }) {
-  const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' || key === 'serviceVariationVersion' ? BigInt(value) : value;
-  const dateParam = params?.date || '';
-  const past = params?.past || '';
+export default async function TimeSlots({ params }) {  
 
-  var timeSlots = [];
-
-  if (dateParam.length !== 0 && past !== 'past') {
-    const start_date = new Date(dateParam);
-    const end_date = getEndAtDate(dateParam);
-
-    const searchRequest = {
-      query: {
-        filter: {
-          startAtRange: {
-            startAt: start_date,
-            endAt: end_date
-          },
-          locationId: params.locationId,
-          segmentFilters: [{ serviceVariationId: params.serviceVariationId }]
-        }
-      }
-    };
-
-    // axios to handle query params
-    const res = await axios.get("https://us-central1-appointments-a917d.cloudfunctions.net/getAvailabilities?", {
-      params: searchRequest
-    });
-    timeSlots = JSON.parse(res.data, reviver);
-    timeSlots = timeSlots.availabilities;
-  };
-
-  if (timeSlots.length === 0) {
+  const timeSlots = await getTimeSlots(params);
+  
+  if (!timeSlots) {
     return <div>Please Select a Weekday in the Near Future</div>
   }
+
   return (
     <div className="flex flex-wrap justify-center gap-4 align-center w-4/5 lg:w-3/5 mx-auto my-4 pb-1">
       {
@@ -53,7 +26,6 @@ export default async function TimeSlots({ params }) {
                 serviceVersion: params.serviceVariationId,
                 teamMemberId: params.teamMemberId,
                 startAt: timeSlot.startAt,
-                service: params.service,
                 timeString: timeString,
               }
             }}>

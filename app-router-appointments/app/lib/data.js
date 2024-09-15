@@ -1,3 +1,5 @@
+import { getEndAtDate } from "./util";
+import axios from 'axios';
 
 const reviver = (key, value) => key === 'version' || key === 'serviceDuration' || key === 'amount' ? BigInt(value) : value;
 
@@ -10,6 +12,7 @@ export async function getServices() {
 
     const serviceData = await res.json();
     const services = JSON.parse(serviceData.items, reviver);
+
     return services;
   }
   catch (error) {
@@ -18,9 +21,63 @@ export async function getServices() {
 
 }
 
+export async function getStaff(serviceId) {
+  try {
+    const res = await fetch(`https://us-central1-appointments-a917d.cloudfunctions.net/getStaffServiceVersion?serviceID=${serviceId}`);
+    if (!res.ok) 
+      throw new Error(`Response status: ${res.status}`);
 
+    const staffData = await res.json();
 
+    const team = JSON.parse(staffData.team, reviver);
+    const service = JSON.parse(staffData.service, reviver);
+    
+    return {team, service}
+  }
+  catch (error) {
+    console.error(error.message);
+  }
+}
 
+export async function getTimeSlots(params) {
+  const dateParam = params?.date || '';
+  const past = params?.past || '';
+
+  try {
+    if (dateParam.length !== 0 && past !== 'past') {
+      const start_date = new Date(dateParam);
+      const end_date = getEndAtDate(dateParam);
+  
+      const staffDataRes = await fetch(`https://us-central1-appointments-a917d.cloudfunctions.net/getStaffServiceVersion?serviceID=${params.serviceId}`);
+      if (!staffDataRes.ok) 
+        throw new Error(`Response status: ${staffDataRes.status}`);
+      const staffData = await staffDataRes.json();
+      const team = JSON.parse(staffData.team, reviver);
+      const locationId = team[0].assignedLocations.locationIds[0];
+  
+  
+      const searchRequest = {
+        query: {
+          filter: {
+            startAtRange: {
+              startAt: start_date,
+              endAt: end_date
+            },
+            locationId: locationId,
+            segmentFilters: [{ serviceVariationId: params.serviceVariationId }]
+          }
+        }
+      };
+  
+      const res = await axios.get("https://us-central1-appointments-a917d.cloudfunctions.net/getAvailabilities?", { params: searchRequest });
+      let timeSlots = JSON.parse(res.data, reviver);
+      timeSlots = timeSlots.availabilities;
+      return timeSlots
+    }
+  } catch (error) {
+    console.error(error.message);
+  } 
+}
 
 export const catalogData = [
   {

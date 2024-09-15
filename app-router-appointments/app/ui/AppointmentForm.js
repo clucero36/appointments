@@ -9,7 +9,7 @@ export default function AppointmentForm({ params }) {
   const [email, setEmail] = useState('');
 
   return (
-    <form action={createAppointment} className='flex flex-col w-4/5 lg:w-2/5 gap-4 mx-auto' autocomplete="off">
+    <form action={createAppointment} className='flex flex-col w-4/5 lg:w-2/5 gap-4 mx-auto' autoComplete="off">
       <input
         className="h-8 block w-full border-0 py-1.5 pl-2 bg-[#c38b8b] ring-1 ring-inset ring-[#9b5d73] text-black placeholder:text-black focus:outline-none rounded-md"
         type='text'
@@ -29,9 +29,10 @@ export default function AppointmentForm({ params }) {
       <input
         className="h-8 block w-full border-0 py-1.5 pl-2 bg-[#c38b8b] ring-1 ring-inset ring-[#9b5d73] text-black placeholder:text-black focus:outline-none rounded-md"
         type='email'
-        placeholder='Email'
         name='email'
         id='email'
+        placeholder='@provider.com'
+        pattern=".+.com"
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
@@ -73,9 +74,9 @@ export default function AppointmentForm({ params }) {
       />
       {
         fname === '' || lname === '' || email === '' ? 
-        <div>Please enter your Name, Email, & Address</div> 
+        <button disabled className="w-2/5 mx-auto p-2">Submit</button>
           :
-        <input type='submit' className="w-2/5 mx-auto cursor-pointer border border-[#9b5d73] p-2 hover:border-[#c38b8b]"/>
+        <button type='submit' className="w-2/5 mx-auto cursor-pointer border border-[#9b5d73] p-2 hover:border-[#c38b8b]">Submit</button>
       }
     </form>
   )
