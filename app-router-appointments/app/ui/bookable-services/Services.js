@@ -6,6 +6,8 @@ export default async function ServicesCards() {
 
   const services = await getServices();
 
+  if (!services) return null;
+
   return (
     <>
       <ServiceStaff services={services}/>
