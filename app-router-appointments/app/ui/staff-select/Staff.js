@@ -33,8 +33,3 @@ export default async function Staff({serviceId}) {
     </div>
   )
 }
-
-// serviceVersion: `${service.object.version}`,
-// teamMember: `${teamMember.givenName}`,
-// serviceName: `${service.object.itemData.name}`
-// locationId: team[0].assignedLocations.locationIds[0],
